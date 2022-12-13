@@ -1,12 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq.Expressions;
 using FMOD.Studio;
 using UnityEngine;
 using FMODUnity;
-using FMODUnity;
-using UnityEngine.PlayerLoop;
 
 public class VolumeController : MonoBehaviour
 {
@@ -29,16 +24,19 @@ public class VolumeController : MonoBehaviour
             throw;
         }
     }
+
     private void Update()
     {
-
+        UpdateVolumes();
     }
+    
+        
 
     private void UpdateVolumes()
     {
         master.setVolume(PlayerPrefs.GetFloat(SettingsMenu.MasterVolumeKey, SettingsMenu.DefaultMasterVolume));
-        master.setVolume(PlayerPrefs.GetFloat(SettingsMenu.MusicVolumeKey, SettingsMenu.DefaultMusicVolume));
-        master.setVolume(PlayerPrefs.GetFloat(SettingsMenu.SFXVolumeKey, SettingsMenu.DefaultSFXVolume));
+        music.setVolume(PlayerPrefs.GetFloat(SettingsMenu.MusicVolumeKey, SettingsMenu.DefaultMusicVolume));
+        sfx.setVolume(PlayerPrefs.GetFloat(SettingsMenu.SFXVolumeKey, SettingsMenu.DefaultSFXVolume));
     }
     
 }
