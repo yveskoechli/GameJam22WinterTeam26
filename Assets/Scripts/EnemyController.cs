@@ -1,13 +1,11 @@
 using System;
 using System.Collections;
-using Cinemachine;
-using UnityEditor.Experimental.GraphView;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
-    #region Inspector
+#region Inspector
 
     private static readonly int MovementSpeed = Animator.StringToHash("MovementSpeed");
     private static readonly int AnimationSpeed = Animator.StringToHash("AnimationSpeed");
@@ -19,72 +17,74 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private float jumpSpeed = 10f;
-
-    [SerializeField] private float slowDownTime = 2f;
+    [SerializeField] private float slowDownMove = 0f;
     
-    [SerializeField] private CinemachineVirtualCamera vCam;
-    [SerializeField] private float screenShakeTime = 1f;
+
+    [SerializeField] private float delayToPlayer = 0.5f;
+    
+    [SerializeField] private Transform cameraTarget;
 
     [SerializeField] private LayerMask groundLayer;
     
     #endregion
 
-    private GameInput input;
-    private InputAction moveAction;
+    //private GameInput input;
+    //private InputAction moveAction;
 
-    private float moveInput;
+    //private float moveInput;
     private float moveDirection;
 
-    private float slowDownMove = 0f;
+   
     
 
     private Rigidbody2D rbPlayer;
     private SpriteRenderer spritePlayer;
     private Animator animator;
 
-    private EnemyController enemy;
-    
     private GameController gameController;
     private float gameMultiplier = 1f;
+
+
 
     #region Unity Event Functions
 
     private void Awake()
     {
-        input = new GameInput();
-        EnableInput();
+        //input = new GameInput();
+        //EnableInput();
 
-        moveAction = input.Player.Move;
+        //moveAction = input.Player.Move;
 
         rbPlayer = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        spritePlayer = GetComponent<SpriteRenderer>();
-        enemy = FindObjectOfType<EnemyController>();
-        gameController = FindObjectOfType<GameController>();
 
-        vCam = FindObjectOfType<CinemachineVirtualCamera>();
-        
-        input.Player.Jump.performed += Jump;
+        gameController = FindObjectOfType<GameController>();
+        //spritePlayer = GetComponent<SpriteRenderer>();
+
+
+        //input.Player.Jump.performed += Jump;
     }
 
     private void Update()
     {
-        ReadInput();
-        Move(moveInput);
+        //ReadInput();
+        Move();
 
         UpdateAnimation();
+
+        gameMultiplier = gameController.GetGameSpeed();
     }
 
 
     private void OnDestroy()
     {
-        input.Player.Jump.performed -= Jump;
+        //input.Player.Jump.performed -= Jump;
     }
     
     #endregion
     
     #region Input
-    public void EnableInput()
+    /*public void EnableInput()
     {
         input.Enable();
     }
@@ -96,28 +96,23 @@ public class PlayerController : MonoBehaviour
     private void ReadInput()
     {
         moveInput = moveAction.ReadValue<float>();
-    }
+    }*/
 
 
     #endregion
 
     #region Movement
 
-    private void Move(float moveInput)
+    private void Move()
     {
-        rbPlayer.velocity = new Vector2((moveInput * moveSpeed) - slowDownMove, rbPlayer.velocity.y);
-        spritePlayer.flipX = rbPlayer.velocity.x < -2f ? true : false;
+        rbPlayer.velocity = new Vector2((moveSpeed) - slowDownMove, rbPlayer.velocity.y);
+        //spritePlayer.flipX = rbPlayer.velocity.x < -2f ? true : false;
 
     }
 
-    private void Jump(InputAction.CallbackContext _)
+    public void Jump()
     {
-        if (!Groundcheck())
-        {
-            return;
-        }
-        rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, jumpSpeed);
-        enemy.Jump();
+        StartCoroutine(JumpDelayed(delayToPlayer));
     }
 
 
@@ -159,37 +154,26 @@ public class PlayerController : MonoBehaviour
 
     public void SlowDown()
     {
-        StartCoroutine(SlowDown(slowDownTime));
-        StartCoroutine(ScreenShake(screenShakeTime));
+        StartCoroutine(SlowDown(1f));
         animator.SetTrigger(Damaged);
     }
-    
+
+    private IEnumerator JumpDelayed(float time)
+    {
+        yield return new WaitForSeconds(time);
+        if (Groundcheck())
+        {
+            rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, jumpSpeed);
+        }
+       
+    }
     
     private IEnumerator SlowDown(float time)
     {
         slowDownMove = 2f;
-        DisableInput();
+        //DisableInput();
         yield return new WaitForSeconds(time);
         slowDownMove = 0f;
-        EnableInput();
-    }
-    
-    private IEnumerator ScreenShake(float time)
-    {
-        vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 1;
-        yield return new WaitForSeconds(time);
-        vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
-    }
-    
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("GameOver"))
-        {
-            Debug.Log("The enemy hits the player!");
-            //TODO Restart Level + Respawn Player + Enemy
-            //Destroy(gameObject);
-        }
-        
-        
+        //EnableInput();
     }
 }
