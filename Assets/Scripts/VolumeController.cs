@@ -5,11 +5,12 @@ using FMODUnity;
 
 public class VolumeController : MonoBehaviour
 {
+
     private VCA master;
     private VCA music;
     private VCA sfx;
 
-    private void Awake()
+    private void Start()
     {
         try
         {
@@ -22,7 +23,7 @@ public class VolumeController : MonoBehaviour
         {
             Debug.LogError("Error: wrong VCA Name");
             throw;
-        }
+        } 
     }
 
     private void Update()

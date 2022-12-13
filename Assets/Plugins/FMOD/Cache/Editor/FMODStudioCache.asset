@@ -15,10 +15,10 @@ MonoBehaviour:
   Path: FMOD Assets/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638065386573316309
+  lastModified: 638065509517293907
   FileSizes:
   - Name: 
-    Value: 962
+    Value: 1370
   Exists: 1
 --- !u!114 &-6820005199103747533
 MonoBehaviour:
@@ -35,10 +35,10 @@ MonoBehaviour:
   Path: FMOD Assets/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638065386573306333
+  lastModified: 638065509517273840
   FileSizes: []
   Exists: 1
---- !u!114 &-5584881622930369365
+--- !u!114 &-4652583451681415414
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,21 +47,78 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/time bomb/proximity
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI click
   m_EditorClassIdentifier: 
-  Name: proximity
-  StudioPath: 
-  Min: 0
-  Max: 100
-  Default: 0
-  ID:
-    data1: 2086401552
-    data2: 2388323691
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
+  Path: event:/UI/UI click
+  Guid:
+    Data1: 762085633
+    Data2: 1178433258
+    Data3: -302872390
+    Data4: -170521118
+  Banks:
+  - {fileID: -6820005199103747533}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 68
+--- !u!114 &-2150612938005081618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/chase theme 2
+  m_EditorClassIdentifier: 
+  Path: event:/Music/chase theme 2
+  Guid:
+    Data1: 1189452524
+    Data2: 1301462411
+    Data3: 2009970565
+    Data4: -307785294
+  Banks:
+  - {fileID: -6820005199103747533}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 199986
+--- !u!114 &-1591856157895828187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/chase theme
+  m_EditorClassIdentifier: 
+  Path: event:/Music/chase theme
+  Guid:
+    Data1: 1467750099
+    Data2: 1268858168
+    Data3: -1774731605
+    Data4: -698085577
+  Banks:
+  - {fileID: -6820005199103747533}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 71700
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,15 +137,21 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: 8172599056915924879}
   - {fileID: 6872577646899187515}
-  - {fileID: 3602071856534015933}
+  - {fileID: 1449858282441134542}
+  - {fileID: -4652583451681415414}
+  - {fileID: 3148986692409652098}
+  - {fileID: 4005496610142330808}
+  - {fileID: -1591856157895828187}
+  - {fileID: 8655114135994194399}
+  - {fileID: -2150612938005081618}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6820005199103747533}
   StringsBanks:
   - {fileID: -8019804318430568679}
-  cacheTime: 638065386573316309
+  cacheTime: 638065509517293907
   cacheVersion: 131593
---- !u!114 &3602071856534015933
+--- !u!114 &1449858282441134542
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -98,24 +161,81 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/time bomb
+  m_Name: 
   m_EditorClassIdentifier: 
-  Path: event:/time bomb
+  Path: 
   Guid:
-    Data1: 541986982
-    Data2: 1074063777
-    Data3: 1027547318
-    Data4: -1761365410
+    Data1: 1189452524
+    Data2: 1301462411
+    Data3: 2009970565
+    Data4: -307785294
   Banks:
-  - {fileID: -6820005199103747533}
-  IsStream: 1
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  IsStream: 0
   Is3D: 0
   IsOneShot: 0
-  Parameters:
-  - {fileID: -5584881622930369365}
+  Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 19825
+  Length: 199986
+--- !u!114 &3148986692409652098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/Main menu theme
+  m_EditorClassIdentifier: 
+  Path: event:/Music/Main menu theme
+  Guid:
+    Data1: 1378822693
+    Data2: 1293661687
+    Data3: -561611608
+    Data4: -2091138287
+  Banks:
+  - {fileID: -6820005199103747533}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 74650
+--- !u!114 &4005496610142330808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI hover
+  m_EditorClassIdentifier: 
+  Path: event:/UI/UI hover
+  Guid:
+    Data1: 442863049
+    Data2: 1075360012
+    Data3: 1539324073
+    Data4: 153981075
+  Banks:
+  - {fileID: -6820005199103747533}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 76
 --- !u!114 &5256035697046464606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,7 +251,7 @@ MonoBehaviour:
   Name: Surface
   StudioPath: 
   Min: 0
-  Max: 1
+  Max: 2
   Default: 0
   ID:
     data1: 1823513468
@@ -141,6 +261,7 @@ MonoBehaviour:
   Labels:
   - Grass
   - Dirt
+  - Rock
   Exists: 1
 --- !u!114 &6872577646899187515
 MonoBehaviour:
@@ -162,7 +283,7 @@ MonoBehaviour:
     Data4: -83466247
   Banks:
   - {fileID: -6820005199103747533}
-  IsStream: 1
+  IsStream: 0
   Is3D: 0
   IsOneShot: 0
   Parameters: []
@@ -197,3 +318,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &8655114135994194399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/player/jump
+  m_EditorClassIdentifier: 
+  Path: event:/player/jump
+  Guid:
+    Data1: -1972663591
+    Data2: 1085438275
+    Data3: -1378041932
+    Data4: 872396000
+  Banks:
+  - {fileID: -6820005199103747533}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 492
