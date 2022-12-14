@@ -202,6 +202,7 @@ public class PlayerController : MonoBehaviour
     {
         rbPlayer.gravityScale = 0;
         rbPlayer.velocity = new Vector2(gameMultiplier * -46*4, 0);
+        Debug.Log("Velocity Dead: " + rbPlayer.velocity.x);
     }
     
     private IEnumerator SlowDown(float time)
