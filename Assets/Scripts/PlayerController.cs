@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private static readonly int IsJumping = Animator.StringToHash("IsJumping");
     private static readonly int IsFalling = Animator.StringToHash("IsFalling");
     private static readonly int Damaged = Animator.StringToHash("Damaged");
+    private static readonly int Dead = Animator.StringToHash("Dead");
     
     
     [SerializeField] private float moveSpeed = 8f;
@@ -35,8 +36,12 @@ public class PlayerController : MonoBehaviour
     private float moveInput;
     private float moveDirection;
 
-    private float slowDownMove = 0f;
+    private int jumpCounter = 0;
+    private int maxJumpAmount = 2;
     
+    private float slowDownMove = 0f;
+
+    private bool isDying = false;
 
     private Rigidbody2D rbPlayer;
     private SpriteRenderer spritePlayer;
@@ -46,6 +51,8 @@ public class PlayerController : MonoBehaviour
     
     private GameController gameController;
     private float gameMultiplier = 1f;
+
+    private Background background;
 
     #region Unity Event Functions
 
@@ -61,18 +68,21 @@ public class PlayerController : MonoBehaviour
         spritePlayer = GetComponent<SpriteRenderer>();
         enemy = FindObjectOfType<EnemyController>();
         gameController = FindObjectOfType<GameController>();
+        background = FindObjectOfType<Background>();
 
         vCam = FindObjectOfType<CinemachineVirtualCamera>();
+
+        
         
         input.Player.Jump.performed += Jump;
     }
 
     private void Update()
     {
-        ReadInput();
-        Move(moveInput);
-
+        //ReadInput();
+        Move();
         UpdateAnimation();
+        gameMultiplier = gameController.GetGameSpeed();
     }
 
 
@@ -103,27 +113,37 @@ public class PlayerController : MonoBehaviour
 
     #region Movement
 
-    private void Move(float moveInput)
+    private void Move()
     {
-        rbPlayer.velocity = new Vector2((moveInput * moveSpeed) - slowDownMove, rbPlayer.velocity.y);
-        spritePlayer.flipX = rbPlayer.velocity.x < -2f ? true : false;
-
+        rbPlayer.velocity = new Vector2(moveSpeed-slowDownMove, rbPlayer.velocity.y);
     }
 
     private void Jump(InputAction.CallbackContext _)
     {
-        if (!Groundcheck())
+        
+        
+        if (Groundcheck())
         {
-            return;
+            rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, jumpSpeed);
+            enemy.Jump();
+            jumpCounter = 1;
         }
-        rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, jumpSpeed);
-        enemy.Jump();
+        else if (jumpCounter < maxJumpAmount)
+        {
+            rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, jumpSpeed);
+            enemy.Jump();
+            jumpCounter++;
+        }
+        else
+        {
+            jumpCounter = 0;
+        }
     }
 
 
     private bool Groundcheck()
     {
-        bool isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 0.5f, groundLayer);
+        bool isGrounded = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, groundLayer);
         
         return isGrounded;
     }
@@ -187,9 +207,31 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("The enemy hits the player!");
             //TODO Restart Level + Respawn Player + Enemy
-            //Destroy(gameObject);
+            //gameController.GameOver();
+            
+            animator.SetTrigger(Dead);
+            enemy.GetComponent<Animator>().SetTrigger(Dead);
+            enemy.slowDownMove = 3.3f;
+            slowDownMove = 3.3f;
+            //background.backgroundStop = true;
+            //enemy.isKilling = true;
+            //enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(-4f, rbPlayer.velocity.y);
+            //isDying = true;
+            //rbPlayer.velocity = new Vector2(-4f, rbPlayer.velocity.y);
+            StartCoroutine(GameOverDelayed(1));
         }
-        
-        
+
+    }
+    
+    private IEnumerator GameOverDelayed(float time)
+    {
+        yield return new WaitForSeconds(time);
+        gameController.GameOver();
+        yield return new WaitForSeconds(1f);
+        slowDownMove = 0;
+        enemy.slowDownMove = 0;
+        //background.backgroundStop = false;
+        //isDying = false;
+        //enemy.isKilling = false;
     }
 }

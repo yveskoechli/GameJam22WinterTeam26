@@ -109,10 +109,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 23
+        height: 26
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -128,12 +128,12 @@ TextureImporter:
       name: TEX_Player_Run_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 23
         y: 0
-        width: 32
-        height: 32
+        width: 23
+        height: 26
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -149,12 +149,12 @@ TextureImporter:
       name: TEX_Player_Run_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 46
         y: 0
-        width: 32
-        height: 32
+        width: 23
+        height: 26
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -170,12 +170,12 @@ TextureImporter:
       name: TEX_Player_Run_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 69
         y: 0
-        width: 32
-        height: 32
+        width: 23
+        height: 26
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -191,12 +191,12 @@ TextureImporter:
       name: TEX_Player_Run_4
       rect:
         serializedVersion: 2
-        x: 128
+        x: 92
         y: 0
-        width: 32
-        height: 32
+        width: 23
+        height: 26
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -212,12 +212,12 @@ TextureImporter:
       name: TEX_Player_Run_5
       rect:
         serializedVersion: 2
-        x: 160
+        x: 115
         y: 0
-        width: 32
-        height: 32
+        width: 23
+        height: 26
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -233,12 +233,12 @@ TextureImporter:
       name: TEX_Player_Run_6
       rect:
         serializedVersion: 2
-        x: 192
+        x: 138
         y: 0
-        width: 32
-        height: 32
+        width: 23
+        height: 26
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -254,12 +254,12 @@ TextureImporter:
       name: TEX_Player_Run_7
       rect:
         serializedVersion: 2
-        x: 224
+        x: 161
         y: 0
-        width: 32
-        height: 32
+        width: 23
+        height: 26
       alignment: 9
-      pivot: {x: 0.5, y: 0.25}
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

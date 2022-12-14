@@ -1,7 +1,9 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 public class ObstacleSpawner : MonoBehaviour
@@ -18,9 +20,19 @@ public class ObstacleSpawner : MonoBehaviour
 
     #endregion
 
-    private bool canSpawn = true;
+    [SerializeField] private bool canSpawn = true;
     
     #region Unity Event Functions
+
+    private void OnEnable()
+    {
+        canSpawn = true;
+    }
+
+    private void OnDisable()
+    {
+        canSpawn = true;
+    }
 
     private void Awake()
     {

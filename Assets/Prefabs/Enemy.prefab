@@ -79,8 +79,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1821386559, guid: 58d1f682d129d8d46b5bf278e3f50f16, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 699094c74c7e05a4597cd846fa620ac3, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -147,7 +147,7 @@ Animator:
   m_GameObject: {fileID: 3551953348478689791}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f7b4368c4af3ef149bdcf2ad0b2f2d5a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 92ab962eacf62c743a074f6a494ac311, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5455b3a7ff80ea24280e47876c39e74d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
+  moveSpeed: 0.6
   jumpSpeed: 15
   slowDownMove: 0
   delayToPlayer: 0.5
@@ -177,6 +177,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  isKilling: 0
 --- !u!1 &3551953348535609006
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +221,7 @@ GameObject:
   - component: {fileID: 570272429150043843}
   m_Layer: 0
   m_Name: Killzone
-  m_TagString: Enemy
+  m_TagString: GameOver
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

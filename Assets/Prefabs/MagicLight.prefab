@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae1ebb8f60b2ebf4dbfbc9a3abb7148d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeedMultiplier: 5
+  moveSpeedMultiplier: 41
 --- !u!95 &304348904852639396
 Animator:
   serializedVersion: 4
@@ -182,8 +182,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.87548083, b: 0.3254717, a: 1}
+  m_Sprite: {fileID: 21300000, guid: a181a15f6f162f0409fc399a28765459, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -279,7 +279,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: 00000000

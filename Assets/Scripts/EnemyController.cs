@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
     
     [SerializeField] private float moveSpeed = 8f;
     [SerializeField] private float jumpSpeed = 10f;
-    [SerializeField] private float slowDownMove = 0f;
+    [SerializeField] public float slowDownMove = 0f;
     
 
     [SerializeField] private float delayToPlayer = 0.5f;
@@ -33,6 +33,8 @@ public class EnemyController : MonoBehaviour
 
     //private float moveInput;
     private float moveDirection;
+
+    public bool isKilling = false;
 
    
     
@@ -60,15 +62,18 @@ public class EnemyController : MonoBehaviour
 
         gameController = FindObjectOfType<GameController>();
         //spritePlayer = GetComponent<SpriteRenderer>();
-
-
+        
         //input.Player.Jump.performed += Jump;
     }
 
     private void Update()
     {
         //ReadInput();
-        Move();
+        if (!isKilling)
+        {
+            Move();
+        }
+        
 
         UpdateAnimation();
 
@@ -83,31 +88,12 @@ public class EnemyController : MonoBehaviour
     
     #endregion
     
-    #region Input
-    /*public void EnableInput()
-    {
-        input.Enable();
-    }
-
-    public void DisableInput()
-    {
-        input.Disable();
-    }
-    private void ReadInput()
-    {
-        moveInput = moveAction.ReadValue<float>();
-    }*/
-
-
-    #endregion
 
     #region Movement
 
     private void Move()
     {
         rbPlayer.velocity = new Vector2((moveSpeed) - slowDownMove, rbPlayer.velocity.y);
-        //spritePlayer.flipX = rbPlayer.velocity.x < -2f ? true : false;
-
     }
 
     public void Jump()
@@ -161,10 +147,10 @@ public class EnemyController : MonoBehaviour
     private IEnumerator JumpDelayed(float time)
     {
         yield return new WaitForSeconds(time);
-        if (Groundcheck())
-        {
+        //if (Groundcheck())
+        //{
             rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, jumpSpeed);
-        }
+        //}
        
     }
     
