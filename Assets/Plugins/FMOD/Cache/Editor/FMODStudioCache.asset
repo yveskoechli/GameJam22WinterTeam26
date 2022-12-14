@@ -1,94 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8019804318430568679
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.strings.bank
-  m_EditorClassIdentifier: 
-  Path: FMOD Assets/Master.strings.bank
-  Name: Master.strings
-  StudioPath: bank:/Master.strings
-  lastModified: 638065429628331577
-  FileSizes:
-  - Name: 
-    Value: 962
-  Exists: 1
---- !u!114 &-6820005199103747533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
-  Path: FMOD Assets/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 638065429628326568
-  FileSizes: []
-  Exists: 1
---- !u!114 &-5584881622930369365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/time bomb/proximity
-  m_EditorClassIdentifier: 
-  Name: proximity
-  StudioPath: 
-  Min: 0
-  Max: 100
-  Default: 0
-  ID:
-    data1: 2086401552
-    data2: 2388323691
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
-  m_Name: FMODStudioCache
-  m_EditorClassIdentifier: 
-  EditorBanks:
-  - {fileID: -8019804318430568679}
-  - {fileID: -6820005199103747533}
-  EditorEvents:
-  - {fileID: 8172599056915924879}
-  - {fileID: 6872577646899187515}
-  - {fileID: 3602071856534015933}
-  EditorParameters: []
-  MasterBanks:
-  - {fileID: -6820005199103747533}
-  StringsBanks:
-  - {fileID: -8019804318430568679}
-  cacheTime: 638065429628331577
-  cacheVersion: 131593
---- !u!114 &3602071856534015933
+--- !u!114 &-4987787371549904282
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,16 +19,135 @@ MonoBehaviour:
     Data3: 1027547318
     Data4: -1761365410
   Banks:
-  - {fileID: -6820005199103747533}
+  - {fileID: 4004439364651531211}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -5584881622930369365}
+  - {fileID: 9202041950473178162}
   MinDistance: 1
   MaxDistance: 20
   Length: 19825
---- !u!114 &5256035697046464606
+--- !u!114 &-3700101431332790992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/player/footsteps
+  m_EditorClassIdentifier: 
+  Path: event:/player/footsteps
+  Guid:
+    Data1: -1322152413
+    Data2: 1100307149
+    Data3: 768706972
+    Data4: 188249775
+  Banks:
+  - {fileID: 4004439364651531211}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 6092627213586429003}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: 
+  EditorBanks:
+  - {fileID: 1169652060806361314}
+  - {fileID: 4004439364651531211}
+  EditorEvents:
+  - {fileID: -3700101431332790992}
+  - {fileID: 880473252485562217}
+  - {fileID: -4987787371549904282}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: 4004439364651531211}
+  StringsBanks:
+  - {fileID: 1169652060806361314}
+  cacheTime: 638066301314586467
+  cacheVersion: 131593
+--- !u!114 &880473252485562217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambience/atmo
+  m_EditorClassIdentifier: 
+  Path: event:/Ambience/atmo
+  Guid:
+    Data1: 1990118291
+    Data2: 1261215946
+    Data3: 2134175152
+    Data4: -83466247
+  Banks:
+  - {fileID: 4004439364651531211}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 58475
+--- !u!114 &1169652060806361314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD Assets/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638066301314586467
+  FileSizes:
+  - Name: 
+    Value: 962
+  Exists: 1
+--- !u!114 &4004439364651531211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: FMOD Assets/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638066301314576502
+  FileSizes: []
+  Exists: 1
+--- !u!114 &6092627213586429003
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -142,7 +173,7 @@ MonoBehaviour:
   - Grass
   - Dirt
   Exists: 1
---- !u!114 &6872577646899187515
+--- !u!114 &9202041950473178162
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,49 +182,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Ambience/atmo
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/time bomb/proximity
   m_EditorClassIdentifier: 
-  Path: event:/Ambience/atmo
-  Guid:
-    Data1: 1990118291
-    Data2: 1261215946
-    Data3: 2134175152
-    Data4: -83466247
-  Banks:
-  - {fileID: -6820005199103747533}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 58475
---- !u!114 &8172599056915924879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/player/footsteps
-  m_EditorClassIdentifier: 
-  Path: event:/player/footsteps
-  Guid:
-    Data1: -1322152413
-    Data2: 1100307149
-    Data3: 768706972
-    Data4: 188249775
-  Banks:
-  - {fileID: -6820005199103747533}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters:
-  - {fileID: 5256035697046464606}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
+  Name: proximity
+  StudioPath: 
+  Min: 0
+  Max: 100
+  Default: 0
+  ID:
+    data1: 2086401552
+    data2: 2388323691
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
