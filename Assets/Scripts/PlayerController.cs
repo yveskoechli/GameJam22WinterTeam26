@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using Cinemachine;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,8 +17,8 @@ public class PlayerController : MonoBehaviour
     private static readonly int Dead = Animator.StringToHash("Dead");
     
     
-    [SerializeField] private float moveSpeed = 8f;
-    [SerializeField] private float jumpSpeed = 10f;
+    [SerializeField] private float moveSpeed = 0.4f;
+    [SerializeField] private float jumpSpeed = 15f;
 
     [SerializeField] private float slowDownTime = 2f;
     
@@ -52,7 +51,7 @@ public class PlayerController : MonoBehaviour
     private GameController gameController;
     private float gameMultiplier = 1f;
 
-    private Background background;
+    //private Background background;
 
     #region Unity Event Functions
 
@@ -68,13 +67,16 @@ public class PlayerController : MonoBehaviour
         spritePlayer = GetComponent<SpriteRenderer>();
         enemy = FindObjectOfType<EnemyController>();
         gameController = FindObjectOfType<GameController>();
-        background = FindObjectOfType<Background>();
+        //background = FindObjectOfType<Background>();
 
         vCam = FindObjectOfType<CinemachineVirtualCamera>();
 
-        
+        gameMultiplier = gameController.GetGameSpeed();
         
         input.Player.Jump.performed += Jump;
+        GameController.GameSpeedUp += SpeedUp;
+        GameController.GameFinished += GameOver;
+
     }
 
     private void Update()
@@ -82,13 +84,15 @@ public class PlayerController : MonoBehaviour
         //ReadInput();
         Move();
         UpdateAnimation();
-        gameMultiplier = gameController.GetGameSpeed();
+        
     }
 
 
     private void OnDestroy()
     {
         input.Player.Jump.performed -= Jump;
+        GameController.GameSpeedUp -= SpeedUp;
+        GameController.GameFinished -= GameOver;
     }
     
     #endregion
@@ -118,6 +122,11 @@ public class PlayerController : MonoBehaviour
         rbPlayer.velocity = new Vector2(moveSpeed-slowDownMove, rbPlayer.velocity.y);
     }
 
+    private void SpeedUp() // Only Animation Speed Up (MoveSpeed stays the same)
+    {
+        gameMultiplier = gameController.GetGameSpeed();
+    }
+    
     private void Jump(InputAction.CallbackContext _)
     {
         
@@ -157,7 +166,8 @@ public class PlayerController : MonoBehaviour
         Vector2 velocity = rbPlayer.velocity;
         velocity.x = MathF.Abs(velocity.x);
         animator.SetFloat(MovementSpeed, velocity.x);
-        animator.SetFloat(AnimationSpeed, (velocity.x + 1f) * gameMultiplier);
+        //animator.SetFloat(AnimationSpeed, (velocity.x + 1f) * gameMultiplier);
+        animator.SetFloat(AnimationSpeed, gameMultiplier);
         switch (velocity.y)
         {
             case < 0:
@@ -183,7 +193,12 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(ScreenShake(screenShakeTime));
         animator.SetTrigger(Damaged);
     }
-    
+
+    private void GameOver()
+    {
+        rbPlayer.gravityScale = 0;
+        rbPlayer.velocity = new Vector2(gameMultiplier * -2, 0);
+    }
     
     private IEnumerator SlowDown(float time)
     {

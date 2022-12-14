@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Background : MonoBehaviour
@@ -19,10 +17,23 @@ public class Background : MonoBehaviour
 
     public bool backgroundStop = false;
 
-    public float targetScrollSpeed;
+    private float targetScrollSpeed;
 
+    private GameController gameController;
 
     #region Unity Event Functions
+
+    private void Awake()
+    {
+        gameController = FindObjectOfType<GameController>();
+        additionalScrollSpeed = gameController.GetGameSpeed();
+        GameController.GameSpeedUp += SpeedUp;
+    }
+
+    private void OnDestroy()
+    {
+        GameController.GameSpeedUp -= SpeedUp;
+    }
 
     private void FixedUpdate()
     {
@@ -36,13 +47,18 @@ public class Background : MonoBehaviour
 
             if (additionalScrollSpeed + 0.001f <= targetScrollSpeed)
             {
-                additionalScrollSpeed = Mathf.Lerp(additionalScrollSpeed, targetScrollSpeed, Time.deltaTime);
-            }
-            /*else{
+                additionalScrollSpeed = Mathf.Lerp(additionalScrollSpeed, targetScrollSpeed, 0.0001f);
+            }/*
+            else{
                 additionalScrollSpeed = targetScrollSpeed;
             }*/
             rend.material.SetTextureOffset(MainTex, new Vector2(offset, 0));
         }
+    }
+
+    private void SpeedUp()
+    {
+        targetScrollSpeed = gameController.GetGameSpeed();
     }
 
     #endregion

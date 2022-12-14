@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -5,7 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    //public static event Action GameFinished;
+    public static event Action GameFinished;
+    public static event Action GameRestart;
+    public static event Action GameSpeedUp;
 
 
     #region Inspector
@@ -104,7 +107,8 @@ public class GameController : MonoBehaviour
     public void SpeedUp()
     {
         gameSpeed += 0.01f;
-        background.targetScrollSpeed = gameSpeed;
+        //background.targetScrollSpeed = gameSpeed;
+        GameSpeedUp?.Invoke();
     }
 
     public float GetTimeCounter()
@@ -114,7 +118,7 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
-        //GameFinished?.Invoke();
+        GameFinished?.Invoke();
         fadeUI.DOShow();
         gameOverScreen.gameObject.SetActive(true);
         gameOverScreen.DOShow();
@@ -143,15 +147,17 @@ public class GameController : MonoBehaviour
             Destroy(obstacle.gameObject);
         }
         
-        
-
-
     }
 
     public void RestartGame()
     {
         StartCoroutine(Respawn(1));
         StartCoroutine(WaitForSpawn(1));
+        
+        gameSpeed = 0.1f;
+        GameRestart?.Invoke();
+
+        
         //gameOverScreen.DOHide();
     }
     
@@ -167,12 +173,10 @@ public class GameController : MonoBehaviour
         Destroy(playerClone);
         Destroy(enemyClone);
         yield return new WaitForSeconds(duration);
-        //playerClone.transform.SetPositionAndRotation(playerStart.position, playerStart.rotation);
-        //enemyClone.transform.SetPositionAndRotation(enemyStart.position, enemyStart.rotation);
+        
         enemyClone = Instantiate(enemy, enemyStart.position, enemyStart.rotation);
         playerClone = Instantiate(player, playerStart.position, playerStart.rotation);
         
-        //Instantiate(player, playerStart.position, playerStart.rotation);
         fadeUI.DOHide();
         gameOverScreen.DOHide();
     }

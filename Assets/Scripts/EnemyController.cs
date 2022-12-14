@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -15,8 +14,8 @@ public class EnemyController : MonoBehaviour
     private static readonly int Damaged = Animator.StringToHash("Damaged");
     
     
-    [SerializeField] private float moveSpeed = 8f;
-    [SerializeField] private float jumpSpeed = 10f;
+    [SerializeField] private float moveSpeed = 0.6f;
+    [SerializeField] private float jumpSpeed = 15f;
     [SerializeField] public float slowDownMove = 0f;
     
 
@@ -52,18 +51,12 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
-        //input = new GameInput();
-        //EnableInput();
-
-        //moveAction = input.Player.Move;
-
         rbPlayer = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
         gameController = FindObjectOfType<GameController>();
-        //spritePlayer = GetComponent<SpriteRenderer>();
-        
-        //input.Player.Jump.performed += Jump;
+        GameController.GameSpeedUp += SpeedUp;
+        GameController.GameFinished += GameOver;
     }
 
     private void Update()
@@ -83,7 +76,8 @@ public class EnemyController : MonoBehaviour
 
     private void OnDestroy()
     {
-        //input.Player.Jump.performed -= Jump;
+        GameController.GameSpeedUp -= SpeedUp;
+        GameController.GameFinished -= GameOver;
     }
     
     #endregion
@@ -96,6 +90,11 @@ public class EnemyController : MonoBehaviour
         rbPlayer.velocity = new Vector2((moveSpeed) - slowDownMove, rbPlayer.velocity.y);
     }
 
+    private void SpeedUp() // Only Animation Speed Up (MoveSpeed stays the same)
+    {
+        gameMultiplier = gameController.GetGameSpeed();
+    }
+    
     public void Jump()
     {
         StartCoroutine(JumpDelayed(delayToPlayer));
@@ -118,7 +117,8 @@ public class EnemyController : MonoBehaviour
         Vector2 velocity = rbPlayer.velocity;
         velocity.x = MathF.Abs(velocity.x);
         animator.SetFloat(MovementSpeed, velocity.x);
-        animator.SetFloat(AnimationSpeed, (velocity.x + 1f) * gameMultiplier);
+        //animator.SetFloat(AnimationSpeed, (velocity.x + 1f) * gameMultiplier);
+        animator.SetFloat(AnimationSpeed, gameMultiplier);
         switch (velocity.y)
         {
             case < 0:
@@ -144,6 +144,12 @@ public class EnemyController : MonoBehaviour
         animator.SetTrigger(Damaged);
     }
 
+    private void GameOver()
+    {
+        rbPlayer.gravityScale = 0;
+        rbPlayer.velocity = new Vector2(gameMultiplier * -2, 0);
+    }
+    
     private IEnumerator JumpDelayed(float time)
     {
         yield return new WaitForSeconds(time);

@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class ObstacleController : MonoBehaviour
@@ -25,8 +24,22 @@ public class ObstacleController : MonoBehaviour
 
         rbObstacle.velocity = new Vector2(moveSpeed*-1, 0);
 
+        GameController.GameSpeedUp += SpeedUp;
+
     }
 
+    private void OnDestroy()
+    {
+        GameController.GameSpeedUp -= SpeedUp;
+    }
+
+
+    private void SpeedUp()
+    {
+        moveSpeed = gameController.GetGameSpeed() * moveSpeedMultiplier;
+        rbObstacle.velocity = new Vector2(moveSpeed*-1, 0);
+    }
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Destroy"))
