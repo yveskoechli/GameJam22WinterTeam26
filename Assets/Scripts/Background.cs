@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Background : MonoBehaviour
@@ -17,7 +18,7 @@ public class Background : MonoBehaviour
 
     public bool backgroundStop = false;
 
-    private float targetScrollSpeed;
+    [SerializeField] private float targetScrollSpeed;
 
     private GameController gameController;
 
@@ -28,11 +29,15 @@ public class Background : MonoBehaviour
         gameController = FindObjectOfType<GameController>();
         additionalScrollSpeed = gameController.GetGameSpeed();
         GameController.GameSpeedUp += SpeedUp;
+        GameController.GameRestart += Restart;
+        GameController.GameFinished += GameOver;
     }
 
     private void OnDestroy()
     {
         GameController.GameSpeedUp -= SpeedUp;
+        GameController.GameRestart -= Restart;
+        GameController.GameFinished -= GameOver;
     }
 
     private void FixedUpdate()
@@ -43,7 +48,7 @@ public class Background : MonoBehaviour
         {
             Renderer rend = backgrounds[background].GetComponent<Renderer>();
 
-            float offset = Time.time * (scrollSpeed[background] + additionalScrollSpeed);
+            float offset = Time.time * (scrollSpeed[background] * additionalScrollSpeed);
 
             if (additionalScrollSpeed + 0.001f <= targetScrollSpeed)
             {
@@ -61,6 +66,23 @@ public class Background : MonoBehaviour
         targetScrollSpeed = gameController.GetGameSpeed();
     }
 
+    private void GameOver()
+    {
+        StartCoroutine(StopBackgroundDelayed(1));
+    }
+
+    private void Restart()
+    {
+        targetScrollSpeed = 0.1f;
+        backgroundStop = false;
+    }
+    
+    private IEnumerator StopBackgroundDelayed(float time)
+    {
+        yield return new WaitForSeconds(time);
+        backgroundStop = true;
+    }
+    
     #endregion
 
 }

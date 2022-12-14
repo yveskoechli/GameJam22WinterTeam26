@@ -19,7 +19,11 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private GameOverMenu gameOverScreen;
     
-    [SerializeField] private float gameSpeed = 0.1f;
+    [Tooltip("Set the initial overall gamespeed of the game")]
+    [SerializeField] private float gameSpeedSet = 0.1f;
+    
+    [Tooltip("Shows the actual gamespeed of the game")]
+    [SerializeField] private float gameSpeed;
 
     [SerializeField] private Transform playerStart;
     [SerializeField] private GameObject player;
@@ -29,6 +33,8 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private ObstacleSpawner obstacleSpawner;
     [SerializeField] private ObstacleSpawner collectibleSpawner;
+    [SerializeField] private ObstacleSpawner foregroundSpawner;
+    
     
     
     [Tooltip("Gibt alle ?s einen Speedschub für den Gamespeed")]
@@ -43,25 +49,31 @@ public class GameController : MonoBehaviour
     private GameObject playerClone;
     private GameObject enemyClone;
 
+    
     private bool canSpeedUp = false;
     private int speedUpSteps = 0;
     private int speedUpStepOld = 0;
+
+    private bool retryOnce = false;
+    
+    
 
     #region Unity Event Functions
 
     private void Awake()
     {
+        gameSpeed = gameSpeedSet;
+        
         enemyClone = Instantiate(enemy, enemyStart.position, enemyStart.rotation);
         playerClone = Instantiate(player, playerStart.position, playerStart.rotation);
-
+        
+        
 
         background = FindObjectOfType<Background>();
-        //playerClone = FindObjectOfType<PlayerController>().gameObject;
-        //enemyClone = FindObjectOfType<EnemyController>().gameObject;
 
         background.additionalScrollSpeed = gameSpeed;
         
-        gameOverScreen = FindObjectOfType<GameOverMenu>();
+        //gameOverScreen = FindObjectOfType<GameOverMenu>();
         gameOverScreen.gameObject.SetActive(false);
         
         fadeUI = FindObjectOfType<FadeUI>();
@@ -69,7 +81,6 @@ public class GameController : MonoBehaviour
         
         
     }
-
 
     private void Update()
     {
@@ -106,9 +117,10 @@ public class GameController : MonoBehaviour
 
     public void SpeedUp()
     {
-        gameSpeed += 0.01f;
+        gameSpeed += 0.02f;
         //background.targetScrollSpeed = gameSpeed;
         GameSpeedUp?.Invoke();
+        obstacleSpawner.IncreaseSpawnRate(0.2f);
     }
 
     public float GetTimeCounter()
@@ -118,6 +130,8 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
+        Debug.Log("Game-Over triggered");
+        retryOnce = false;
         GameFinished?.Invoke();
         fadeUI.DOShow();
         gameOverScreen.gameObject.SetActive(true);
@@ -126,12 +140,13 @@ public class GameController : MonoBehaviour
         //List<GameObject> magicLights = new List<GameObject>();
         //magicLights = gameFindObjectsOfType<MagicLightController>();
 
-        gameSpeed = 1;
+        gameSpeed = gameSpeedSet;
         gameOverScreen.SetHighscore(timerText.text);
         timerCounter = 0;
         
         obstacleSpawner.gameObject.SetActive(false);
         collectibleSpawner.gameObject.SetActive(false);
+        foregroundSpawner.gameObject.SetActive(false);
         
         var magicLights = FindObjectsOfType<MagicLightController>();
 
@@ -151,10 +166,15 @@ public class GameController : MonoBehaviour
 
     public void RestartGame()
     {
+        if (retryOnce)
+        {
+            return;
+        }
+        retryOnce = true;
         StartCoroutine(Respawn(1));
         StartCoroutine(WaitForSpawn(1));
         
-        gameSpeed = 0.1f;
+        gameSpeed = gameSpeedSet;
         GameRestart?.Invoke();
 
         

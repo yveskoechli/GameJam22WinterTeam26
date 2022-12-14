@@ -6,6 +6,8 @@ public class ObstacleController : MonoBehaviour
 
     [SerializeField] private float moveSpeedMultiplier = 2f;
 
+    [SerializeField] private bool isObstacle = true;
+
     #endregion
     
     private GameController gameController;
@@ -25,6 +27,8 @@ public class ObstacleController : MonoBehaviour
         rbObstacle.velocity = new Vector2(moveSpeed*-1, 0);
 
         GameController.GameSpeedUp += SpeedUp;
+        
+        Debug.Log("velocity:" + rbObstacle.velocity.x);
 
     }
 
@@ -47,7 +51,11 @@ public class ObstacleController : MonoBehaviour
             Destroy(gameObject);
             
         }
-        
+
+        if (!isObstacle)
+        {
+            return;
+        }
         if (other.CompareTag("Player"))
         {
             other.GetComponent<PlayerController>().SlowDown();

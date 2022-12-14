@@ -56,7 +56,7 @@ public class EnemyController : MonoBehaviour
 
         gameController = FindObjectOfType<GameController>();
         GameController.GameSpeedUp += SpeedUp;
-        GameController.GameFinished += GameOver;
+        //GameController.GameFinished += GameOver;
     }
 
     private void Update()
@@ -77,7 +77,7 @@ public class EnemyController : MonoBehaviour
     private void OnDestroy()
     {
         GameController.GameSpeedUp -= SpeedUp;
-        GameController.GameFinished -= GameOver;
+        //GameController.GameFinished -= GameOver;
     }
     
     #endregion
@@ -144,10 +144,10 @@ public class EnemyController : MonoBehaviour
         animator.SetTrigger(Damaged);
     }
 
-    private void GameOver()
+    public void GameOver()
     {
         rbPlayer.gravityScale = 0;
-        rbPlayer.velocity = new Vector2(gameMultiplier * -2, 0);
+        rbPlayer.velocity = new Vector2(gameMultiplier * -46*4, 0);
     }
     
     private IEnumerator JumpDelayed(float time)

@@ -14,7 +14,8 @@ public class PlayerController : MonoBehaviour
     private static readonly int IsJumping = Animator.StringToHash("IsJumping");
     private static readonly int IsFalling = Animator.StringToHash("IsFalling");
     private static readonly int Damaged = Animator.StringToHash("Damaged");
-    private static readonly int Dead = Animator.StringToHash("Dead");
+    private static readonly int IsDead = Animator.StringToHash("IsDead");
+    
     
     
     [SerializeField] private float moveSpeed = 0.4f;
@@ -35,8 +36,8 @@ public class PlayerController : MonoBehaviour
     private float moveInput;
     private float moveDirection;
 
-    private int jumpCounter = 0;
-    private int maxJumpAmount = 2;
+    [SerializeField] private int jumpCounter = 0;
+    [SerializeField] private int maxJumpAmount = 2;
     
     private float slowDownMove = 0f;
 
@@ -50,6 +51,7 @@ public class PlayerController : MonoBehaviour
     
     private GameController gameController;
     private float gameMultiplier = 1f;
+    
 
     //private Background background;
 
@@ -75,13 +77,14 @@ public class PlayerController : MonoBehaviour
         
         input.Player.Jump.performed += Jump;
         GameController.GameSpeedUp += SpeedUp;
-        GameController.GameFinished += GameOver;
+        //GameController.GameFinished += GameOver;
 
     }
 
     private void Update()
     {
         //ReadInput();
+        if (isDying) { return; }
         Move();
         UpdateAnimation();
         
@@ -92,7 +95,7 @@ public class PlayerController : MonoBehaviour
     {
         input.Player.Jump.performed -= Jump;
         GameController.GameSpeedUp -= SpeedUp;
-        GameController.GameFinished -= GameOver;
+        //GameController.GameFinished -= GameOver;
     }
     
     #endregion
@@ -143,10 +146,10 @@ public class PlayerController : MonoBehaviour
             enemy.Jump();
             jumpCounter++;
         }
-        else
+        /*else
         {
             jumpCounter = 0;
-        }
+        }*/
     }
 
 
@@ -189,6 +192,7 @@ public class PlayerController : MonoBehaviour
 
     public void SlowDown()
     {
+        if (isDying) { return; }
         StartCoroutine(SlowDown(slowDownTime));
         StartCoroutine(ScreenShake(screenShakeTime));
         animator.SetTrigger(Damaged);
@@ -197,7 +201,7 @@ public class PlayerController : MonoBehaviour
     private void GameOver()
     {
         rbPlayer.gravityScale = 0;
-        rbPlayer.velocity = new Vector2(gameMultiplier * -2, 0);
+        rbPlayer.velocity = new Vector2(gameMultiplier * -46*4, 0);
     }
     
     private IEnumerator SlowDown(float time)
@@ -218,21 +222,17 @@ public class PlayerController : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (isDying) { return; }
+        
         if (other.CompareTag("GameOver"))
         {
-            Debug.Log("The enemy hits the player!");
-            //TODO Restart Level + Respawn Player + Enemy
-            //gameController.GameOver();
-            
-            animator.SetTrigger(Dead);
-            enemy.GetComponent<Animator>().SetTrigger(Dead);
-            enemy.slowDownMove = 3.3f;
-            slowDownMove = 3.3f;
-            //background.backgroundStop = true;
-            //enemy.isKilling = true;
-            //enemy.GetComponent<Rigidbody2D>().velocity = new Vector2(-4f, rbPlayer.velocity.y);
-            //isDying = true;
-            //rbPlayer.velocity = new Vector2(-4f, rbPlayer.velocity.y);
+            isDying = true;
+            animator.SetBool(IsDead, true);
+            enemy.GetComponent<Animator>().SetBool(IsDead, true);
+            //enemy.slowDownMove = 3.3f;
+            //slowDownMove = 3.3f;
+            enemy.GameOver();
+            GameOver();
             StartCoroutine(GameOverDelayed(1));
         }
 
@@ -245,8 +245,6 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         slowDownMove = 0;
         enemy.slowDownMove = 0;
-        //background.backgroundStop = false;
-        //isDying = false;
-        //enemy.isKilling = false;
+
     }
 }

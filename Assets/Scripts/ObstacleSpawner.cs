@@ -11,8 +11,6 @@ public class ObstacleSpawner : MonoBehaviour
 
     [SerializeField] private List<GameObject> prefabsList;
 
-    [SerializeField] private float spawnFrequency = 1f;
-
     [SerializeField] private float minWaitForSpawn = 1f;
     [SerializeField] private float maxWaitForSpawn = 5f;
 
@@ -45,7 +43,7 @@ public class ObstacleSpawner : MonoBehaviour
         canSpawn = false;
     }
 
-    private void SpawnObstacle(float frequency)
+    private void SpawnObstacle()
     {
         int listLength = prefabsList.Count;
         //Debug.Log(listLength);
@@ -56,10 +54,19 @@ public class ObstacleSpawner : MonoBehaviour
 
     #endregion
 
+    public void IncreaseSpawnRate(float time)
+    {
+        if (maxWaitForSpawn > 1 + time)
+        {
+            maxWaitForSpawn -= time;
+        }
+        
+    }
+
     private IEnumerator SpawnObstacleDelayed(float time)
     {
         yield return new WaitForSeconds(time);
-        SpawnObstacle(spawnFrequency);
+        SpawnObstacle();
         canSpawn = true;
     }
 
