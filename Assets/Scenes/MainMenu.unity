@@ -2617,11 +2617,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 1990118291
-      Data2: 1261215946
-      Data3: 2134175152
-      Data4: -83466247
-    Path: event:/Ambience/atmo
+      Data1: 1378822693
+      Data2: 1293661687
+      Data3: -561611608
+      Data4: -2091138287
+    Path: event:/Music/Main menu theme
   Event: 
   PlayEvent: 11
   StopEvent: 12
