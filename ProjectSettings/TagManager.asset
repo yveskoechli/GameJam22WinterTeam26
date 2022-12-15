@@ -7,6 +7,7 @@ TagManager:
   - Destroy
   - Enemy
   - GameOver
+  - Floor
   layers:
   - Default
   - TransparentFX

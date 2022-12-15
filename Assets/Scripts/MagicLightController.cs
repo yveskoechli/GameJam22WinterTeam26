@@ -1,4 +1,5 @@
 
+using FMODUnity;
 using UnityEngine;
 
 public class MagicLightController : MonoBehaviour
@@ -8,6 +9,8 @@ public class MagicLightController : MonoBehaviour
     #region Inspector
 
     [SerializeField] private float moveSpeedMultiplier = 2f;
+    
+    [SerializeField] private StudioEventEmitter collectSound;
 
     #endregion
     
@@ -44,7 +47,7 @@ public class MagicLightController : MonoBehaviour
             other.GetComponent<EnemyController>().SlowDown();
             Debug.Log(other.tag);
             animator.SetTrigger(Collected);
-            
+            collectSound.Play();
         }
     }
 }

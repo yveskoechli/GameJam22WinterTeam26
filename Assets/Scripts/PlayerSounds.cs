@@ -8,6 +8,8 @@ public class PlayerSounds : MonoBehaviour
 
     [SerializeField] private StudioEventEmitter stepSound;
     [SerializeField] private StudioEventEmitter jumpSound;
+    [SerializeField] private StudioEventEmitter landSound;
+    
 
     [SerializeField] private PlayerController playerController;
 
@@ -36,6 +38,13 @@ public class PlayerSounds : MonoBehaviour
     {
         return jumpSound;
     }
+    
+    public StudioEventEmitter GetLandSound()
+    {
+        return landSound;
+    }
+
+
 
     #endregion
 }

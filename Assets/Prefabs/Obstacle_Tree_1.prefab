@@ -175,5 +175,13 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 8159811381855801727, guid: ee69a7e733a63064ab8a024fc0fa983a, type: 3}
+      propertyPath: OverrideMaxDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8159811381855801727, guid: ee69a7e733a63064ab8a024fc0fa983a, type: 3}
+      propertyPath: OverrideMinDistance
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee69a7e733a63064ab8a024fc0fa983a, type: 3}

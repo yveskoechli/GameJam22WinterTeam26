@@ -17,7 +17,7 @@ public class ObstacleSpawner : MonoBehaviour
     #endregion
 
     [SerializeField] private bool canSpawn = true;
-    
+
     #region Unity Event Functions
 
     private void OnEnable()
@@ -67,6 +67,12 @@ public class ObstacleSpawner : MonoBehaviour
     {
         maxWaitForSpawn += time;
 
+    }
+
+    public void SetSpawnRates(float min, float max)
+    {
+        minWaitForSpawn = min;
+        maxWaitForSpawn = max;
     }
 
     private IEnumerator SpawnObstacleDelayed(float time)

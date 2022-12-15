@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using Cinemachine;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float slowDownTime = 2f;
     [SerializeField] private float slowDownForce = 2f;
     
+    [SerializeField] private StudioEventEmitter gameOverSound;
     
     //[SerializeField] private CinemachineVirtualCamera vCam;
     //[SerializeField] private float screenShakeTime = 1f;
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int maxJumpAmount = 2;
     
     private float slowDownMove = 0f;
+    private float slowDownMultiplier = 1f;
 
     private bool isDying = false;
 
@@ -96,7 +98,11 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         //ReadInput();
-        if (isDying) { return; }
+        if (isDying)
+        {
+            rbPlayer.velocity = new Vector2(gameMultiplier * -46, 0);
+            return;
+        }
         Move();
         UpdateAnimation();
         
@@ -180,7 +186,7 @@ public class PlayerController : MonoBehaviour
         velocity.x = MathF.Abs(velocity.x);
         animator.SetFloat(MovementSpeed, velocity.x);
         //animator.SetFloat(AnimationSpeed, (velocity.x + 1f) * gameMultiplier);
-        animator.SetFloat(AnimationSpeed, gameMultiplier);
+        animator.SetFloat(AnimationSpeed, gameMultiplier*slowDownMultiplier);
         switch (velocity.y)
         {
             case < 0:
@@ -205,9 +211,9 @@ public class PlayerController : MonoBehaviour
         if (isDying) { return; }
         StartCoroutine(SlowDown(slowDownTime));
         vCamAnimator.SetTrigger(CameraShake);
-        //StartCoroutine(ScreenShake(screenShakeTime));
         animator.SetTrigger(Damaged);
     }
+    
 
     private void GameOver()
     {
@@ -219,20 +225,15 @@ public class PlayerController : MonoBehaviour
     private IEnumerator SlowDown(float time)
     {
         slowDownMove = slowDownForce;
+        slowDownMultiplier = 0.5f;
         DisableInput();
         yield return new WaitForSeconds(time);
         EnableInput();
         yield return new WaitForSeconds(0.8f);
         slowDownMove = 0f;
-        
+        slowDownMultiplier = 1;
     }
     
-    /*private IEnumerator ScreenShake(float time)
-    {
-        vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 1;
-        yield return new WaitForSeconds(time);
-        vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
-    }*/
     
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -240,8 +241,10 @@ public class PlayerController : MonoBehaviour
         
         if (other.CompareTag("GameOver"))
         {
+            gameOverSound.Play();
             Time.timeScale = 0.5f;
             isDying = true;
+            gameController.levelBoundLeft.enabled = false;
             animator.SetBool(IsDead, true);
             enemy.GetComponent<Animator>().SetBool(IsDead, true);
             //enemy.slowDownMove = 3.3f;

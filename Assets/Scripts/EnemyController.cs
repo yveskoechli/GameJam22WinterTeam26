@@ -57,20 +57,28 @@ public class EnemyController : MonoBehaviour
         gameController = FindObjectOfType<GameController>();
         GameController.GameSpeedUp += SpeedUp;
         //GameController.GameFinished += GameOver;
+        
+        gameMultiplier = gameController.GetGameSpeed();
     }
 
     private void Update()
     {
-        //ReadInput();
+        if (isKilling)
+        {
+            rbPlayer.velocity = new Vector2(gameMultiplier * -46, 0);
+            return;
+        }
+        /*
         if (!isKilling)
         {
             Move();
         }
-        
+        */
 
+        Move();
         UpdateAnimation();
 
-        gameMultiplier = gameController.GetGameSpeed();
+        //gameMultiplier = gameController.GetGameSpeed();
     }
 
 
@@ -140,12 +148,14 @@ public class EnemyController : MonoBehaviour
 
     public void SlowDown()
     {
+        if (isKilling) { return; }
         StartCoroutine(SlowDown(1f));
         animator.SetTrigger(Damaged);
     }
 
     public void GameOver()
     {
+        isKilling = true;
         //rbPlayer.gravityScale = 0;
         //rbPlayer.velocity = new Vector2(gameMultiplier * -46*4, 0);
     }

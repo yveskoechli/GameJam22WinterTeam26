@@ -35,10 +35,15 @@ public class GameController : MonoBehaviour
     [SerializeField] private ObstacleSpawner obstacleSpawner;
     [SerializeField] private ObstacleSpawner collectibleSpawner;
     [SerializeField] private ObstacleSpawner foregroundSpawner;
+
+    [SerializeField] public BoxCollider2D levelBoundLeft;
     
     [SerializeField] private StudioEventEmitter musicClose;
     [SerializeField] private StudioEventEmitter musicFar;
     [SerializeField] private StudioEventEmitter musicGameOver;
+    
+    [SerializeField] private StudioEventEmitter atmoForest;
+    
     [SerializeField] private StudioEventEmitter sfxTicTac;
 
     [SerializeField] private Animator vCamAnimator;
@@ -55,25 +60,31 @@ public class GameController : MonoBehaviour
     private GameObject playerClone;
     private GameObject enemyClone;
 
-    
     private bool canSpeedUp = false;
     private int speedUpSteps = 0;
     private int speedUpStepOld = 0;
 
     private bool retryOnce = false;
     private bool isGameOver = false;
+
+    private String difficulty;
     
+    #region Unity Event Functions
     
 
-    #region Unity Event Functions
+    
 
     private void Awake()
     {
-        //String difficulty = PlayerPrefs.GetString("difficulty");
         //PlayerPrefs.SetString("difficulty", "easy");
         //PlayerPrefs.Save();
-        Debug.Log("Difficultylevel is "+ DifficultyLevel.difficulty);
+        
+        difficulty = PlayerPrefs.GetString("difficulty");
+        SetDifficultyLevel(difficulty);
+        
+        //Debug.Log("Difficultylevel is "+ DifficultyLevel.difficulty);
         PlayMusic(musicFar);
+        atmoForest.Play();
         gameSpeed = gameSpeedSet;
         
         enemyClone = Instantiate(enemy, enemyStart.position, enemyStart.rotation);
@@ -94,13 +105,18 @@ public class GameController : MonoBehaviour
         
     }
 
+    private void Start()
+    {
+        
+    }
+    
     private void Update()
     {
         timerCounter += Time.deltaTime;
         UpdateTimerUI(timerCounter);
         
         // macht alle paar sekunden einen Speedup (Anhand speedUpTime)
-        speedUpSteps = ((int)timerCounter - (int)timerCounter % 10)/ speedUpTime;
+        speedUpSteps = ((int)timerCounter - (int)timerCounter % speedUpTime)/ speedUpTime;
         
         if (speedUpSteps > speedUpStepOld)
         {
@@ -136,7 +152,6 @@ public class GameController : MonoBehaviour
     {
         sfxTicTac.Play();
         gameSpeed += 0.02f;
-        //background.targetScrollSpeed = gameSpeed;
         GameSpeedUp?.Invoke();
         obstacleSpawner.IncreaseSpawnRate(0.2f);
         collectibleSpawner.DecreaseSpawnRate(0.2f);
@@ -151,21 +166,16 @@ public class GameController : MonoBehaviour
     {
         isGameOver = true;
         PlayMusic(musicGameOver);
-        //musicClose.Stop();
-        //musicFar.Stop();
-        //musicGameOver.Play();
-        Debug.Log("Game-Over triggered");
+        //levelBoundLeft.enabled = false;
+        
         retryOnce = false;
         GameFinished?.Invoke();
         fadeUI.DOShow();
         gameOverScreen.gameObject.SetActive(true);
         gameOverScreen.DOShow();
-        //StartCoroutine(DOHideDelayed(2));
-        //List<GameObject> magicLights = new List<GameObject>();
-        //magicLights = gameFindObjectsOfType<MagicLightController>();
 
         gameSpeed = gameSpeedSet;
-        gameOverScreen.SetHighscore(timerText.text);
+        gameOverScreen.SetHighscore(timerText.text, difficulty);
         timerCounter = 0;
         
         obstacleSpawner.gameObject.SetActive(false);
@@ -194,53 +204,40 @@ public class GameController : MonoBehaviour
         {
             return;
         }
-
         Time.timeScale = 1f;
+        background.backgroundStop = false;
         retryOnce = true;
+        levelBoundLeft.enabled = true;
         StartCoroutine(Respawn(1));
         StartCoroutine(WaitForSpawn(1));
         
         gameSpeed = gameSpeedSet;
         GameRestart?.Invoke();
         
-        
-
-        
-        //musicClose.Stop();
-        //musicFar.Stop();
-        //musicFar.Play();
-
-        //gameOverScreen.DOHide();
     }
     
     public void QuitGame()
     {
         StopAllMusic();
-        //musicClose.Stop();
-        //musicFar.Stop();
-        //musicGameOver.Stop();
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
 
 
     private void SoundChanger()
     {
-        float enemyPosition = enemyClone.transform.position.x;
-        float playerPosition = playerClone.transform.position.x;
+        var enemyPosition = enemyClone.transform.position.x;
+        var playerPosition = playerClone.transform.position.x;
 
-        float distance = playerPosition - enemyPosition;
+        var distance = playerPosition - enemyPosition;
         
         if (distance < 4f && !musicClose.IsPlaying())
         {
             PlayMusic(musicClose);
-            //musicFar.Stop();
-            //musicClose.Play();
         }
         else if (distance > 6 && !musicFar.IsPlaying())
         {
             PlayMusic(musicFar);
-            //musicClose.Stop();
-            //musicFar.Play();
         }
     }
 
@@ -280,6 +277,41 @@ public class GameController : MonoBehaviour
         if (musicFar.IsPlaying()) { musicFar.Stop(); }
         if (musicGameOver.IsPlaying()) { musicGameOver.Stop(); }
         if (musicClose.IsPlaying()) { musicClose.Stop(); }
+        if (atmoForest.IsPlaying()) { atmoForest.Stop(); }
+        
+    }
+
+    private void SetDifficultyLevel(string difficulty)
+    {
+        if (String.IsNullOrEmpty(difficulty))
+        {
+            Debug.LogWarning("Difficulty-Level not transfered!");
+            return;
+        }
+        switch (difficulty)
+        {
+            case "Easy":
+                gameSpeedSet = 0.1f;
+                speedUpTime = 20;
+                obstacleSpawner.SetSpawnRates(1f, 5f);
+                collectibleSpawner.SetSpawnRates(1f, 4f);
+                break;
+            case "Normal":
+                gameSpeedSet = 0.15f;
+                speedUpTime = 15;
+                obstacleSpawner.SetSpawnRates(0.8f, 4f);
+                collectibleSpawner.SetSpawnRates(2f, 6f);
+                break;
+            case "Hard":
+                gameSpeedSet = 0.2f;
+                speedUpTime = 10;
+                obstacleSpawner.SetSpawnRates(0.7f, 2.5f);
+                collectibleSpawner.SetSpawnRates(2f, 8f);
+                break;
+            default:
+                Debug.LogWarning("Mismatch Difficulty-Level string: " + difficulty);
+                break;
+        }
     }
     
     #endregion
@@ -303,6 +335,7 @@ public class GameController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         obstacleSpawner.gameObject.SetActive(true);
         collectibleSpawner.gameObject.SetActive(true);
+        foregroundSpawner.gameObject.SetActive(true);
     }
 
 

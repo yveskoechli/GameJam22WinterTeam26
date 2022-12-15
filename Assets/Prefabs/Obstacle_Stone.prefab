@@ -183,5 +183,25 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 8159811381855801727, guid: ee69a7e733a63064ab8a024fc0fa983a, type: 3}
+      propertyPath: EventReference.Path
+      value: event:/player/damage stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 8159811381855801727, guid: ee69a7e733a63064ab8a024fc0fa983a, type: 3}
+      propertyPath: EventReference.Guid.Data1
+      value: -636007872
+      objectReference: {fileID: 0}
+    - target: {fileID: 8159811381855801727, guid: ee69a7e733a63064ab8a024fc0fa983a, type: 3}
+      propertyPath: EventReference.Guid.Data2
+      value: 1208391612
+      objectReference: {fileID: 0}
+    - target: {fileID: 8159811381855801727, guid: ee69a7e733a63064ab8a024fc0fa983a, type: 3}
+      propertyPath: EventReference.Guid.Data3
+      value: 1299693500
+      objectReference: {fileID: 0}
+    - target: {fileID: 8159811381855801727, guid: ee69a7e733a63064ab8a024fc0fa983a, type: 3}
+      propertyPath: EventReference.Guid.Data4
+      value: 1315567233
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee69a7e733a63064ab8a024fc0fa983a, type: 3}

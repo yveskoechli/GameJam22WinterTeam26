@@ -1,3 +1,4 @@
+using FMODUnity;
 using UnityEngine;
 
 public class ObstacleController : MonoBehaviour
@@ -8,6 +9,8 @@ public class ObstacleController : MonoBehaviour
 
     [SerializeField] private bool isObstacle = true;
 
+    [SerializeField] private StudioEventEmitter hitPlayerSound;
+    
     #endregion
     
     private GameController gameController;
@@ -28,7 +31,8 @@ public class ObstacleController : MonoBehaviour
 
         GameController.GameSpeedUp += SpeedUp;
         
-        Debug.Log("velocity:" + rbObstacle.velocity.x);
+        Debug.Log("rbObstacle velocity:" + rbObstacle.velocity.x);
+        Debug.Log("MoveSpeed velocity:" + moveSpeed);
 
     }
 
@@ -42,6 +46,7 @@ public class ObstacleController : MonoBehaviour
     {
         moveSpeed = gameController.GetGameSpeed() * moveSpeedMultiplier;
         rbObstacle.velocity = new Vector2(moveSpeed*-1, 0);
+        Debug.Log("Speedup velocity:" + moveSpeed);
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -58,6 +63,7 @@ public class ObstacleController : MonoBehaviour
         }
         if (other.CompareTag("Player"))
         {
+            hitPlayerSound.Play();
             other.GetComponent<PlayerController>().SlowDown();
         }
     }

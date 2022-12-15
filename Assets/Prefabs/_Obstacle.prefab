@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -9008218558037914441}
   - component: {fileID: -7676537726024214358}
   - component: {fileID: 4112507157757043570}
+  - component: {fileID: 8159811381855801727}
   m_Layer: 0
   m_Name: _Obstacle
   m_TagString: Untagged
@@ -149,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeedMultiplier: 46
   isObstacle: 1
+  hitPlayerSound: {fileID: 8159811381855801727}
 --- !u!60 &4112507157757043570
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -178,3 +180,33 @@ PolygonCollider2D:
       - {x: -0.5, y: -0.5}
       - {x: 0.5, y: -0.5}
       - {x: 0.5, y: 0.5}
+--- !u!114 &8159811381855801727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840317542532576432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -289385362
+      Data2: 1324372108
+      Data3: 1391798178
+      Data4: -1842909042
+    Path: event:/player/damage wood
+  Event: 
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20

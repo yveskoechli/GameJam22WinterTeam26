@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -27,10 +28,15 @@ public class Background : MonoBehaviour
     private void Awake()
     {
         gameController = FindObjectOfType<GameController>();
-        additionalScrollSpeed = gameController.GetGameSpeed();
+        
         GameController.GameSpeedUp += SpeedUp;
         GameController.GameRestart += Restart;
         GameController.GameFinished += GameOver;
+    }
+
+    private void Start()
+    {
+        additionalScrollSpeed = gameController.GetGameSpeed();
     }
 
     private void OnDestroy()
@@ -68,14 +74,14 @@ public class Background : MonoBehaviour
 
     private void GameOver()
     {
-        StartCoroutine(StopBackgroundDelayed(1));
+        StartCoroutine(StopBackgroundDelayed(0.1f));
     }
 
     private void Restart()
     {
+        backgroundStop = false;
         targetScrollSpeed = gameController.GetGameSpeed();
         additionalScrollSpeed = targetScrollSpeed;
-        backgroundStop = false;
     }
     
     private IEnumerator StopBackgroundDelayed(float time)

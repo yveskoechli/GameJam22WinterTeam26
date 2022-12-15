@@ -8,6 +8,7 @@ public class GameOverMenu : MonoBehaviour
 {
     //public static event Action GameRestart;
     [SerializeField] private TextMeshProUGUI highscoreText;
+    [SerializeField] private TextMeshProUGUI gamemodeText;
     private CanvasGroup canvasGroup;
 
     #region Unity Event Functions
@@ -16,9 +17,10 @@ public class GameOverMenu : MonoBehaviour
         canvasGroup = this.gameObject.GetComponent<CanvasGroup>();
     }
 
-    public void SetHighscore(string highscore)
+    public void SetHighscore(string highscore, string gamemode)
     {
         highscoreText.text = highscore;
+        gamemodeText.text = "Gamemode: " + gamemode;
     }
 
     #endregion
