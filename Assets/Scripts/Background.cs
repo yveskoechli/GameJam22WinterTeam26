@@ -13,6 +13,8 @@ public class Background : MonoBehaviour
     [SerializeField] private GameObject[] backgrounds;
 
     [SerializeField] private float[] scrollSpeed;
+
+    [SerializeField] private float speedUpRate = 0.1f;
     
 
     #endregion
@@ -23,6 +25,15 @@ public class Background : MonoBehaviour
 
     private GameController gameController;
 
+    private bool hasSpeedUp = false;
+
+    private float lerp = 0f;
+
+    private float offset = 0f;
+    private float currentOffset = 0f;
+
+    private float additionalScrollSpeedOld;
+    
     #region Unity Event Functions
 
     private void Awake()
@@ -53,23 +64,64 @@ public class Background : MonoBehaviour
         for (int background = 0; background < backgrounds.Length; background++)
         {
             Renderer rend = backgrounds[background].GetComponent<Renderer>();
-
-            float offset = Time.time * (scrollSpeed[background] * additionalScrollSpeed);
-
+            offset = Time.time * (scrollSpeed[background] * additionalScrollSpeed);
+            //currentOffset = Mathf.Lerp(currentOffset, offset, 3);
+            Debug.Log("Current Offset: " +currentOffset + " of Background No: "+ background);
+            rend.material.SetTextureOffset(MainTex, new Vector2(offset, 0));
+            //offset += (scrollSpeed[background] * additionalScrollSpeed) * Time.deltaTime * speedUpRate;
+            /*if (hasSpeedUp)
+            {
+                offset = Time.time * (scrollSpeed[background] * additionalScrollSpeed) + 
+                         (additionalScrollSpeedOld-additionalScrollSpeed)*scrollSpeed[background]*0.01f*Time.deltaTime;
+                rend.material.SetTextureOffset(MainTex, new Vector2(offset, 0));
+            }
+            else
+            {
+                offset = Time.time * (scrollSpeed[background] * additionalScrollSpeed);
+                rend.material.SetTextureOffset(MainTex, new Vector2(offset, 0));
+            }
+            
+            */
+            /*
             if (additionalScrollSpeed + 0.001f <= targetScrollSpeed)
             {
                 additionalScrollSpeed = Mathf.Lerp(additionalScrollSpeed, targetScrollSpeed, 0.0001f);
-            }/*
+            }
+            else if (additionalScrollSpeed + 0.0005f <= targetScrollSpeed)
+            {
+                additionalScrollSpeed = targetScrollSpeed;
+            }
             else{
                 additionalScrollSpeed = targetScrollSpeed;
             }*/
-            rend.material.SetTextureOffset(MainTex, new Vector2(offset, 0));
+            
         }
+        if (!hasSpeedUp)
+        {
+            return;
+        }
+        if (additionalScrollSpeed <= targetScrollSpeed)
+        {
+            additionalScrollSpeed += 0.01f * Time.deltaTime;
+            //additionalScrollSpeed = Mathf.Lerp(additionalScrollSpeed, targetScrollSpeed, 0.015f*Time.deltaTime);
+            //lerp += 1f * Time.deltaTime;
+        }
+        else
+        {
+            additionalScrollSpeed = targetScrollSpeed;
+            hasSpeedUp = false;
+            
+        }
+        Debug.Log("Additional: "+ additionalScrollSpeed + "   Target:" + targetScrollSpeed);
     }
 
     private void SpeedUp()
     {
         targetScrollSpeed = gameController.GetGameSpeed();
+        //additionalScrollSpeedOld = additionalScrollSpeed;
+        hasSpeedUp = true;
+        //lerp = 0;
+        //additionalScrollSpeed = gameController.GetGameSpeed();
     }
 
     private void GameOver()

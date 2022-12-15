@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using FMODUnity;
 using TMPro;
 using UnityEngine;
@@ -150,6 +151,11 @@ public class GameController : MonoBehaviour
 
     public void SpeedUp()
     {
+        /*float newGameSpeed = gameSpeed + 0.02f;
+        DOTween.To(() => gameSpeed, x => gameSpeed = x, newGameSpeed, 2).OnComplete(() =>
+        {
+            Debug.Log("Speed-Up finished");
+        });*/
         sfxTicTac.Play();
         gameSpeed += 0.02f;
         GameSpeedUp?.Invoke();
@@ -204,6 +210,10 @@ public class GameController : MonoBehaviour
         {
             return;
         }
+
+        speedUpSteps = 0;
+        speedUpStepOld = speedUpSteps;
+        
         Time.timeScale = 1f;
         background.backgroundStop = false;
         retryOnce = true;
@@ -223,6 +233,10 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    public void PlayerJump()
+    {
+        playerClone.GetComponent<PlayerController>().Jump();
+    }
 
     private void SoundChanger()
     {
@@ -269,7 +283,6 @@ public class GameController : MonoBehaviour
             if (!musicGameOver.IsPlaying()) { musicGameOver.Play(); }
             return;
         }
-        //music.Play();
     }
 
     private void StopAllMusic()

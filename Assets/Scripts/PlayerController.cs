@@ -147,7 +147,24 @@ public class PlayerController : MonoBehaviour
     {
         gameMultiplier = gameController.GetGameSpeed();
     }
-    
+
+    public void Jump()  // Um Jump über GameController anzusteuern
+    {
+        if (Groundcheck())
+        {
+            rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, jumpSpeed);
+            enemy.Jump();
+            jumpCounter = 1;
+            playerSounds.GetJumpSound().Play();
+        }
+        else if (jumpCounter < maxJumpAmount)
+        {
+            rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, jumpSpeed);
+            enemy.Jump();
+            jumpCounter++;
+            playerSounds.GetJumpSound().Play();
+        }
+    }
     private void Jump(InputAction.CallbackContext _)
     {
         
