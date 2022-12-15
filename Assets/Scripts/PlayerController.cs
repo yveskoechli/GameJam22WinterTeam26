@@ -15,19 +15,23 @@ public class PlayerController : MonoBehaviour
     private static readonly int IsFalling = Animator.StringToHash("IsFalling");
     private static readonly int Damaged = Animator.StringToHash("Damaged");
     private static readonly int IsDead = Animator.StringToHash("IsDead");
-    
+    private static readonly int CameraShake = Animator.StringToHash("CameraShake");
     
     
     [SerializeField] private float moveSpeed = 0.4f;
     [SerializeField] private float jumpSpeed = 15f;
 
     [SerializeField] private float slowDownTime = 2f;
+    [SerializeField] private float slowDownForce = 2f;
     
-    [SerializeField] private CinemachineVirtualCamera vCam;
-    [SerializeField] private float screenShakeTime = 1f;
+    
+    //[SerializeField] private CinemachineVirtualCamera vCam;
+    //[SerializeField] private float screenShakeTime = 1f;
 
     [SerializeField] private LayerMask groundLayer;
-    
+
+
+
     #endregion
 
     private GameInput input;
@@ -51,8 +55,11 @@ public class PlayerController : MonoBehaviour
     
     private GameController gameController;
     private float gameMultiplier = 1f;
-    
 
+    private PlayerSounds playerSounds;
+
+    private Animator vCamAnimator;
+    
     //private Background background;
 
     #region Unity Event Functions
@@ -61,17 +68,22 @@ public class PlayerController : MonoBehaviour
     {
         input = new GameInput();
         EnableInput();
-
+        
         moveAction = input.Player.Move;
 
         rbPlayer = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spritePlayer = GetComponent<SpriteRenderer>();
+        playerSounds = GetComponent<PlayerSounds>();
+        
         enemy = FindObjectOfType<EnemyController>();
         gameController = FindObjectOfType<GameController>();
+
+        vCamAnimator = gameController.GetVCamAnimator();
+        
         //background = FindObjectOfType<Background>();
 
-        vCam = FindObjectOfType<CinemachineVirtualCamera>();
+        //vCam = FindObjectOfType<CinemachineVirtualCamera>();
 
         gameMultiplier = gameController.GetGameSpeed();
         
@@ -133,23 +145,21 @@ public class PlayerController : MonoBehaviour
     private void Jump(InputAction.CallbackContext _)
     {
         
-        
         if (Groundcheck())
         {
             rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, jumpSpeed);
             enemy.Jump();
             jumpCounter = 1;
+            playerSounds.GetJumpSound().Play();
         }
         else if (jumpCounter < maxJumpAmount)
         {
             rbPlayer.velocity = new Vector2(rbPlayer.velocity.x, jumpSpeed);
             enemy.Jump();
             jumpCounter++;
+            playerSounds.GetJumpSound().Play();
         }
-        /*else
-        {
-            jumpCounter = 0;
-        }*/
+
     }
 
 
@@ -194,32 +204,35 @@ public class PlayerController : MonoBehaviour
     {
         if (isDying) { return; }
         StartCoroutine(SlowDown(slowDownTime));
-        StartCoroutine(ScreenShake(screenShakeTime));
+        vCamAnimator.SetTrigger(CameraShake);
+        //StartCoroutine(ScreenShake(screenShakeTime));
         animator.SetTrigger(Damaged);
     }
 
     private void GameOver()
     {
-        rbPlayer.gravityScale = 0;
-        rbPlayer.velocity = new Vector2(gameMultiplier * -46*4, 0);
+        //rbPlayer.gravityScale = 0;
+        //rbPlayer.velocity = new Vector2(gameMultiplier * -46*4, 0);
         Debug.Log("Velocity Dead: " + rbPlayer.velocity.x);
     }
     
     private IEnumerator SlowDown(float time)
     {
-        slowDownMove = 2f;
+        slowDownMove = slowDownForce;
         DisableInput();
         yield return new WaitForSeconds(time);
-        slowDownMove = 0f;
         EnableInput();
+        yield return new WaitForSeconds(0.8f);
+        slowDownMove = 0f;
+        
     }
     
-    private IEnumerator ScreenShake(float time)
+    /*private IEnumerator ScreenShake(float time)
     {
         vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 1;
         yield return new WaitForSeconds(time);
         vCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
-    }
+    }*/
     
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -227,6 +240,7 @@ public class PlayerController : MonoBehaviour
         
         if (other.CompareTag("GameOver"))
         {
+            Time.timeScale = 0.5f;
             isDying = true;
             animator.SetBool(IsDead, true);
             enemy.GetComponent<Animator>().SetBool(IsDead, true);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using FMODUnity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -35,7 +36,12 @@ public class GameController : MonoBehaviour
     [SerializeField] private ObstacleSpawner collectibleSpawner;
     [SerializeField] private ObstacleSpawner foregroundSpawner;
     
-    
+    [SerializeField] private StudioEventEmitter musicClose;
+    [SerializeField] private StudioEventEmitter musicFar;
+    [SerializeField] private StudioEventEmitter musicGameOver;
+    [SerializeField] private StudioEventEmitter sfxTicTac;
+
+    [SerializeField] private Animator vCamAnimator;
     
     [Tooltip("Gibt alle ?s einen Speedschub für den Gamespeed")]
     [SerializeField] private int speedUpTime = 10;
@@ -55,6 +61,7 @@ public class GameController : MonoBehaviour
     private int speedUpStepOld = 0;
 
     private bool retryOnce = false;
+    private bool isGameOver = false;
     
     
 
@@ -62,6 +69,11 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        //String difficulty = PlayerPrefs.GetString("difficulty");
+        //PlayerPrefs.SetString("difficulty", "easy");
+        //PlayerPrefs.Save();
+        Debug.Log("Difficultylevel is "+ DifficultyLevel.difficulty);
+        PlayMusic(musicFar);
         gameSpeed = gameSpeedSet;
         
         enemyClone = Instantiate(enemy, enemyStart.position, enemyStart.rotation);
@@ -101,7 +113,7 @@ public class GameController : MonoBehaviour
             SpeedUp();
             canSpeedUp = false;
         }
-        
+        if(!isGameOver){ SoundChanger(); }
     }
 
     private void UpdateTimerUI(float time)
@@ -115,12 +127,19 @@ public class GameController : MonoBehaviour
         return gameSpeed;
     }
 
+    public Animator GetVCamAnimator()
+    {
+        return vCamAnimator;
+    }
+
     public void SpeedUp()
     {
+        sfxTicTac.Play();
         gameSpeed += 0.02f;
         //background.targetScrollSpeed = gameSpeed;
         GameSpeedUp?.Invoke();
         obstacleSpawner.IncreaseSpawnRate(0.2f);
+        collectibleSpawner.DecreaseSpawnRate(0.2f);
     }
 
     public float GetTimeCounter()
@@ -130,6 +149,11 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
+        isGameOver = true;
+        PlayMusic(musicGameOver);
+        //musicClose.Stop();
+        //musicFar.Stop();
+        //musicGameOver.Play();
         Debug.Log("Game-Over triggered");
         retryOnce = false;
         GameFinished?.Invoke();
@@ -170,24 +194,96 @@ public class GameController : MonoBehaviour
         {
             return;
         }
+
+        Time.timeScale = 1f;
         retryOnce = true;
         StartCoroutine(Respawn(1));
         StartCoroutine(WaitForSpawn(1));
         
         gameSpeed = gameSpeedSet;
         GameRestart?.Invoke();
+        
+        
 
         
+        //musicClose.Stop();
+        //musicFar.Stop();
+        //musicFar.Play();
+
         //gameOverScreen.DOHide();
     }
     
     public void QuitGame()
     {
+        StopAllMusic();
+        //musicClose.Stop();
+        //musicFar.Stop();
+        //musicGameOver.Stop();
         SceneManager.LoadScene("MainMenu");
     }
 
-    #endregion
+
+    private void SoundChanger()
+    {
+        float enemyPosition = enemyClone.transform.position.x;
+        float playerPosition = playerClone.transform.position.x;
+
+        float distance = playerPosition - enemyPosition;
+        
+        if (distance < 4f && !musicClose.IsPlaying())
+        {
+            PlayMusic(musicClose);
+            //musicFar.Stop();
+            //musicClose.Play();
+        }
+        else if (distance > 6 && !musicFar.IsPlaying())
+        {
+            PlayMusic(musicFar);
+            //musicClose.Stop();
+            //musicFar.Play();
+        }
+    }
+
+    private void PlayMusic(StudioEventEmitter music) // Play a choice of Music and Stop the other music if they are actually playing
+    {
+        if (music.IsPlaying())
+        {
+            return;
+        }
+        
+        if (music == musicClose)
+        {
+            if (musicFar.IsPlaying()) { musicFar.Stop(); }
+            if (musicGameOver.IsPlaying()) { musicGameOver.Stop(); }
+            if (!musicClose.IsPlaying()) { musicClose.Play(); }
+            return;
+        }
+        if (music == musicFar)
+        {
+            if (musicClose.IsPlaying()) { musicClose.Stop(); }
+            if (musicGameOver.IsPlaying()) { musicGameOver.Stop(); }
+            if (!musicFar.IsPlaying()) { musicFar.Play(); }
+            return;
+        }
+        if (music == musicGameOver)
+        {
+            if (musicFar.IsPlaying()) { musicFar.Stop(); }
+            if (musicClose.IsPlaying()) { musicClose.Stop(); }
+            if (!musicGameOver.IsPlaying()) { musicGameOver.Play(); }
+            return;
+        }
+        //music.Play();
+    }
+
+    private void StopAllMusic()
+    {
+        if (musicFar.IsPlaying()) { musicFar.Stop(); }
+        if (musicGameOver.IsPlaying()) { musicGameOver.Stop(); }
+        if (musicClose.IsPlaying()) { musicClose.Stop(); }
+    }
     
+    #endregion
+
     private IEnumerator Respawn(float duration)
     {
         Destroy(playerClone);
@@ -199,8 +295,9 @@ public class GameController : MonoBehaviour
         
         fadeUI.DOHide();
         gameOverScreen.DOHide();
+        PlayMusic(musicFar);
+        isGameOver = false;
     }
-    
     private IEnumerator WaitForSpawn(float duration)
     {
         yield return new WaitForSeconds(duration);

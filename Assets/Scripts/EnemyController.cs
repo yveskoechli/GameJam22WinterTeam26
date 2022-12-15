@@ -146,8 +146,8 @@ public class EnemyController : MonoBehaviour
 
     public void GameOver()
     {
-        rbPlayer.gravityScale = 0;
-        rbPlayer.velocity = new Vector2(gameMultiplier * -46*4, 0);
+        //rbPlayer.gravityScale = 0;
+        //rbPlayer.velocity = new Vector2(gameMultiplier * -46*4, 0);
     }
     
     private IEnumerator JumpDelayed(float time)

@@ -73,7 +73,8 @@ public class Background : MonoBehaviour
 
     private void Restart()
     {
-        targetScrollSpeed = 0.1f;
+        targetScrollSpeed = gameController.GetGameSpeed();
+        additionalScrollSpeed = targetScrollSpeed;
         backgroundStop = false;
     }
     

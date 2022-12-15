@@ -62,6 +62,12 @@ public class ObstacleSpawner : MonoBehaviour
         }
         
     }
+    
+    public void DecreaseSpawnRate(float time)
+    {
+        maxWaitForSpawn += time;
+
+    }
 
     private IEnumerator SpawnObstacleDelayed(float time)
     {

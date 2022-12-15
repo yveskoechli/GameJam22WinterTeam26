@@ -27,6 +27,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 143910
+--- !u!114 &-8816414724746025469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI hover low
+  m_EditorClassIdentifier: 
+  Path: event:/UI/UI hover low
+  Guid:
+    Data1: 982532152
+    Data2: 1318554383
+    Data3: -164821618
+    Data4: -528348433
+  Banks:
+  - {fileID: 795887428620785898}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 188
 --- !u!114 &-8655942704740710054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,11 +150,38 @@ MonoBehaviour:
   Path: FMOD Assets/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638066498042802656
+  lastModified: 638066645629626496
   FileSizes:
   - Name: 
-    Value: 1474
+    Value: 1814
   Exists: 1
+--- !u!114 &-6781628482408706580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/player/damage stone
+  m_EditorClassIdentifier: 
+  Path: event:/player/damage stone
+  Guid:
+    Data1: -636007872
+    Data2: 1208391612
+    Data3: 1299693500
+    Data4: 1315567233
+  Banks:
+  - {fileID: 795887428620785898}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 527
 --- !u!114 &-6433858043271977054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,6 +369,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 75
+--- !u!114 &-3252780565961085951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/shadow ob pick up
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/shadow ob pick up
+  Guid:
+    Data1: 1463018242
+    Data2: 1295273610
+    Data3: 580136611
+    Data4: 572415035
+  Banks:
+  - {fileID: 795887428620785898}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2670
 --- !u!114 &-2397970007150306237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,6 +531,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 149
+--- !u!114 &-257347219607411718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/TicTac
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/TicTac
+  Guid:
+    Data1: -334860146
+    Data2: 1112079582
+    Data3: -187735626
+    Data4: 1766469418
+  Banks:
+  - {fileID: 795887428620785898}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1471
 --- !u!114 &-6261412752499119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -476,7 +584,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 181
+  Length: 188
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,12 +612,19 @@ MonoBehaviour:
   - {fileID: -2397970007150306237}
   - {fileID: -4797073244429402044}
   - {fileID: -8655942704740710054}
+  - {fileID: -257347219607411718}
+  - {fileID: -3252780565961085951}
+  - {fileID: 9213113053072907240}
+  - {fileID: -8816414724746025469}
+  - {fileID: -6781628482408706580}
+  - {fileID: 4429056798007714903}
+  - {fileID: 4987645128028880098}
   EditorParameters: []
   MasterBanks:
   - {fileID: 795887428620785898}
   StringsBanks:
   - {fileID: -6882822842634912931}
-  cacheTime: 638066498042802656
+  cacheTime: 638066645629626496
   cacheVersion: 131593
 --- !u!114 &795887428620785898
 MonoBehaviour:
@@ -526,7 +641,7 @@ MonoBehaviour:
   Path: FMOD Assets/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638066498042792642
+  lastModified: 638066645629606475
   FileSizes: []
   Exists: 1
 --- !u!114 &880473252485562217
@@ -609,7 +724,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 149
+  Length: 238
 --- !u!114 &2554432708349372067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -684,6 +799,60 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 181
+--- !u!114 &4429056798007714903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/player/damage wood
+  m_EditorClassIdentifier: 
+  Path: event:/player/damage wood
+  Guid:
+    Data1: -289385362
+    Data2: 1324372108
+    Data3: 1391798178
+    Data4: -1842909042
+  Banks:
+  - {fileID: 795887428620785898}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 812
+--- !u!114 &4987645128028880098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI click low
+  m_EditorClassIdentifier: 
+  Path: event:/UI/UI click low
+  Guid:
+    Data1: 974569671
+    Data2: 1227993107
+    Data3: -2060798018
+    Data4: -704635895
+  Banks:
+  - {fileID: 795887428620785898}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 238
 --- !u!114 &6675224919037236083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -738,3 +907,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 58475
+--- !u!114 &9213113053072907240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/shadow ob pick up extra variante
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/shadow ob pick up extra variante
+  Guid:
+    Data1: -2129978072
+    Data2: 1192711530
+    Data3: -1745334101
+    Data4: 1299722572
+  Banks:
+  - {fileID: 795887428620785898}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1938
