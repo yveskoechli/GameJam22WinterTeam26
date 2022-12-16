@@ -9,8 +9,11 @@ public class VolumeController : MonoBehaviour
     private VCA music;
     private VCA sfx;
 
-    private void Awake()
+    [SerializeField] private StudioEventEmitter mainMenuMusic;
+
+    private void Start()
     {
+        Invoke(nameof(PlayMusic), 1);
         try
         {
             master = RuntimeManager.GetVCA("vca:/Master");
@@ -29,14 +32,23 @@ public class VolumeController : MonoBehaviour
     {
         UpdateVolumes();
     }
-    
-        
+
+
+    private void OnDestroy()
+    {
+        mainMenuMusic.Stop();
+    }
 
     private void UpdateVolumes()
     {
         master.setVolume(PlayerPrefs.GetFloat(SettingsMenu.MasterVolumeKey, SettingsMenu.DefaultMasterVolume));
         music.setVolume(PlayerPrefs.GetFloat(SettingsMenu.MusicVolumeKey, SettingsMenu.DefaultMusicVolume));
         sfx.setVolume(PlayerPrefs.GetFloat(SettingsMenu.SFXVolumeKey, SettingsMenu.DefaultSFXVolume));
+    }
+
+    private void PlayMusic()
+    {
+        mainMenuMusic.Play();
     }
     
 }

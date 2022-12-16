@@ -135,6 +135,11 @@ public class GameController : MonoBehaviour
         if(!isGameOver){ SoundChanger(); }
     }
 
+    private void OnDestroy()
+    {
+        StopAllMusic();
+    }
+
     private void UpdateTimerUI(float time)
     {
         int seconds = (int)time % 60;
