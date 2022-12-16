@@ -1,4 +1,5 @@
 
+using System;
 using FMODUnity;
 using UnityEngine;
 
@@ -34,7 +35,14 @@ public class MagicLightController : MonoBehaviour
         rbLight.velocity = new Vector2(moveSpeed*-1, 0);
         
     }
-    
+
+    private void Update()
+    {
+        moveSpeed = gameController.GetGameSpeed() * moveSpeedMultiplier;
+
+        rbLight.velocity = new Vector2(moveSpeed*-1, 0);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Destroy"))

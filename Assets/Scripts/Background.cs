@@ -61,12 +61,14 @@ public class Background : MonoBehaviour
     {
         if (backgroundStop) { return; }
         
+        additionalScrollSpeed = gameController.GetGameSpeed();
+        Debug.Log("Scrollspeed: " + additionalScrollSpeed);
         for (int background = 0; background < backgrounds.Length; background++)
         {
             Renderer rend = backgrounds[background].GetComponent<Renderer>();
-            offset = Time.time * (scrollSpeed[background] * additionalScrollSpeed);
+            offset = (Time.time) * (scrollSpeed[background] * additionalScrollSpeed);
             //currentOffset = Mathf.Lerp(currentOffset, offset, 3);
-            Debug.Log("Current Offset: " +currentOffset + " of Background No: "+ background);
+            //Debug.Log("Current Offset: " +currentOffset + " of Background No: "+ background);
             rend.material.SetTextureOffset(MainTex, new Vector2(offset, 0));
             //offset += (scrollSpeed[background] * additionalScrollSpeed) * Time.deltaTime * speedUpRate;
             /*if (hasSpeedUp)
@@ -96,11 +98,12 @@ public class Background : MonoBehaviour
             }*/
             
         }
-        if (!hasSpeedUp)
-        {
-            return;
-        }
-        if (additionalScrollSpeed <= targetScrollSpeed)
+        //if (!hasSpeedUp)
+        //{
+          //  return;
+        //}
+        
+        /*if (additionalScrollSpeed <= targetScrollSpeed)
         {
             additionalScrollSpeed += 0.01f * Time.deltaTime;
             //additionalScrollSpeed = Mathf.Lerp(additionalScrollSpeed, targetScrollSpeed, 0.015f*Time.deltaTime);
@@ -112,12 +115,12 @@ public class Background : MonoBehaviour
             hasSpeedUp = false;
             
         }
-        Debug.Log("Additional: "+ additionalScrollSpeed + "   Target:" + targetScrollSpeed);
+        Debug.Log("Additional: "+ additionalScrollSpeed + "   Target:" + targetScrollSpeed);*/
     }
 
     private void SpeedUp()
     {
-        targetScrollSpeed = gameController.GetGameSpeed();
+        //targetScrollSpeed = gameController.GetGameSpeed();
         //additionalScrollSpeedOld = additionalScrollSpeed;
         hasSpeedUp = true;
         //lerp = 0;

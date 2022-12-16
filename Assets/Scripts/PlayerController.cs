@@ -97,6 +97,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        gameMultiplier = gameController.GetGameSpeed();
         //ReadInput();
         if (isDying)
         {

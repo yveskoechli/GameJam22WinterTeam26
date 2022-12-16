@@ -1,3 +1,4 @@
+using System;
 using FMODUnity;
 using UnityEngine;
 
@@ -41,12 +42,18 @@ public class ObstacleController : MonoBehaviour
         GameController.GameSpeedUp -= SpeedUp;
     }
 
-
-    private void SpeedUp()
+    private void Update()
     {
         moveSpeed = gameController.GetGameSpeed() * moveSpeedMultiplier;
         rbObstacle.velocity = new Vector2(moveSpeed*-1, 0);
-        Debug.Log("Speedup velocity:" + moveSpeed);
+    }
+
+
+    private void SpeedUp()
+    {
+        //moveSpeed = gameController.GetGameSpeed() * moveSpeedMultiplier;
+        //rbObstacle.velocity = new Vector2(moveSpeed*-1, 0);
+        //Debug.Log("Speedup velocity:" + moveSpeed);
     }
     
     private void OnTriggerEnter2D(Collider2D other)

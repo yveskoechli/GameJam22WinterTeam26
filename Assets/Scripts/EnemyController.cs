@@ -63,6 +63,7 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        gameMultiplier = gameController.GetGameSpeed();
         if (isKilling)
         {
             rbPlayer.velocity = new Vector2(gameMultiplier * -46, 0);

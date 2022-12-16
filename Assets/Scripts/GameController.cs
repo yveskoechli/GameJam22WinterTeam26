@@ -48,6 +48,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private StudioEventEmitter sfxTicTac;
 
     [SerializeField] private Animator vCamAnimator;
+
+    [SerializeField] private GameObject jumpButton;
     
     [Tooltip("Gibt alle ?s einen Speedschub für den Gamespeed")]
     [SerializeField] private int speedUpTime = 10;
@@ -151,13 +153,13 @@ public class GameController : MonoBehaviour
 
     public void SpeedUp()
     {
-        /*float newGameSpeed = gameSpeed + 0.02f;
-        DOTween.To(() => gameSpeed, x => gameSpeed = x, newGameSpeed, 2).OnComplete(() =>
+        float newGameSpeed = gameSpeed + 0.01f;
+        DOTween.To(() => gameSpeed, x => gameSpeed = x, newGameSpeed, 1).OnComplete(() =>
         {
             Debug.Log("Speed-Up finished");
-        });*/
+        });
         sfxTicTac.Play();
-        gameSpeed += 0.02f;
+        //gameSpeed += 0.02f;
         GameSpeedUp?.Invoke();
         obstacleSpawner.IncreaseSpawnRate(0.2f);
         collectibleSpawner.DecreaseSpawnRate(0.2f);
@@ -173,6 +175,7 @@ public class GameController : MonoBehaviour
         isGameOver = true;
         PlayMusic(musicGameOver);
         //levelBoundLeft.enabled = false;
+        jumpButton.gameObject.SetActive(false);
         
         retryOnce = false;
         GameFinished?.Invoke();
@@ -211,6 +214,7 @@ public class GameController : MonoBehaviour
             return;
         }
 
+        jumpButton.gameObject.SetActive(true);
         speedUpSteps = 0;
         speedUpStepOld = speedUpSteps;
         
